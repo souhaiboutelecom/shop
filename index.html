@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <title>SOUHAIBOU TÉLÉCOM  </title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+</head>
+<body>
+    <!-- Page de chargement -->
+ 
+    <!-- Indicateur de connexion -->
+    <div id="connection-status" class="offline">
+        <i class="fas fa-wifi-slash"></i> Pas de connexion Internet
+    </div>
+
+    <!-- En-tête avec barre de recherche -->
+    <header id="main-header">
+        <div class="header-top">
+            <div class="logo-container">
+                <img src="https://i.supaimg.com/b4a44dc2-c78a-45ff-a93b-dd14e4249939.jpg" alt="SOUAIBOU TÉLÉCOM" class="logo">
+                <div class="brand-text">
+                </div>
+            </div>
+            <div class="search-container">
+                <input type="text" id="search-input" placeholder="Rechercher un produit...">
+                <button id="search-btn"><i class="fas fa-search"></i></button>
+            </div>
+            <!-- Champ de mot de passe admin caché -->
+            <div id="admin-password-container" class="hidden">
+                <input type="password" id="admin-password-input" placeholder="Mot de passe admin">
+                <button id="admin-login-btn">Connexion</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Conteneur principal pour les vues -->
+    <main id="app-container">
+        <!-- Page d'accueil -->
+        <section id="home-page" class="page active">
+           <div class="top-bar">
+    <p>BOUTIQUE SOUHAIBOU TELECOM</p>
+</div>
+
+            <div class="carousel-container">
+                <div class="carousel">
+                   <div class="carousel-inner" id="carousel-inner">
+    <!-- Les images seront ajoutées ici -->
+</div>
+                    <div class="carousel-dots">
+                        <!-- Les points de navigation seront ajoutés dynamiquement -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section iPhone -->
+            <div class="category-bar blue">
+                <div class="bar-content">
+                    <div class="bar-title">
+                        <i class="fab fa-apple"></i>
+                        <h2>IPHONE</h2>
+                        <p>Meilleures offres</p>
+                    </div>
+                    <a href="#" class="see-more" data-category="iPhone">Voir plus <i class="fas fa-chevron-right"></i></a>
+                </div>
+            </div>
+            <div class="products-scroll" id="iphone-products">
+                <!-- Produits iPhone ajoutés dynamiquement -->
+            </div>
+
+            <!-- Section Vente Flash -->
+            <div class="category-bar red">
+                <div class="bar-content">
+                    <div class="bar-title">
+                        <i class="fas fa-bolt"></i>
+                        <h2>Vente FLASH</h2>
+                        <p>Termine dans: <span id="countdown">12:00:00</span></p>
+                    </div>
+                    <a href="#" class="see-more" data-category="flash">Voir plus <i class="fas fa-chevron-right"></i></a>
+                </div>
+            </div>
+            <div class="products-scroll" id="flash-products">
+                <!-- Produits en vente flash ajoutés dynamiquement -->
+            </div>
+<!-- ===== Section Catégories ===== -->
+<section class="categories-section">
+  <h2 class="categories-title">Catégories</h2>
+  <div class="categories-grid">
+    <div class="category-card" id="iphone" data-category="iPhone" style="background-image:url('https://i.postimg.cc/sxCRC3Mz/6.png')"></div>
+<div class="category-card" id="samsung" data-category="Samsung" style="background-image:url('https://i.postimg.cc/zvwYJ4hg/7.png')"></div>
+<div class="category-card" id="tecno" data-category="Tecno" style="background-image:url('https://i.postimg.cc/BZ20cPzn/8.png')"></div>
+<!-- Répétez pour toutes les autres catégoriesavec l'attribut data-category approprié -->
+    <div class="category-card" id="autres" style="background-image:url('https://i.postimg.cc/BQgfR94W/9.png')"></div>
+
+    <div class="category-card" id="ecouteur" style="background-image:url('https://i.postimg.cc/Ghr1Mh0J/10.png')"></div>
+    <div class="category-card" id="airpods" style="background-image:url('https://i.postimg.cc/NfbZp6kB/11.png')"></div>
+    <div class="category-card" id="chargeur" style="background-image:url('https://i.postimg.cc/tgtx04Sd/12.png')"></div>
+    <div class="category-card" id="powerbank" style="background-image:url('https://i.postimg.cc/y88CHQ8D/13.png')"></div>
+
+    <div class="category-card" id="tablette" style="background-image:url('https://i.postimg.cc/P5x9cCSZ/14.png')"></div>
+    <div class="category-card" id="ordinateur" style="background-image:url('https://i.postimg.cc/W3RyhXT6/15.png')"></div>
+    <div class="category-card" id="box" style="background-image:url('https://i.postimg.cc/XJwzFdvM/16.png')"></div>
+    <div class="category-card" id="smartwatch" style="background-image:url('https://i.postimg.cc/6qcbbKRY/17.png')"></div>
+  </div>
+</section>
+
+            <!-- Section Catégories -->
+            <div class="category-bar light-blue">
+                <div class="bar-title">
+                        
+                        <p><i class="fas fa-crown"></i> Chez nous, le client est ROI !</p>
+
+                    </div>
+            </div>
+           
+
+            <!-- Section Recommandé pour vous -->
+            <h3 class="section-title">RECOMMANDÉ POUR VOUS</h3>
+            <div class="products-scroll" id="recommended-products">
+                <!-- Produits recommandés ajoutés dynamiquement -->
+            </div>
+
+            <!-- Sections de catégories dynamiques -->
+            <div id="dynamic-categories">
+                <!-- Sections de catégories ajoutées dynamiquement -->
+            </div>
+        </section>
+
+        <!-- Page de catégorie -->
+        <section id="category-page" class="page">
+            <div class="page-header">
+                <button class="back-btn"><i class="fas fa-arrow-left"></i></button>
+                <h2 id="category-title">Nom de la catégorie</h2>
+            </div>
+            <div class="products-grid" id="category-products">
+                <!-- Produits de la catégorie ajoutés dynamiquement -->
+            </div>
+        </section>
+<!-- Page de résultats de recherche -->
+<section id="search-results-page" class="page">
+    <div class="page-header">
+        <button class="back-btn"><i class="fas fa-arrow-left"></i></button>
+        <h2 id="search-results-title">Résultats de recherche</h2>
+    </div>
+    <div class="products-grid" id="search-results-container">
+        <!-- Résultats de recherche ajoutés dynamiquement -->
+    </div>
+    <div id="no-results-message" class="hidden">
+        <i class="fas fa-search"></i>
+        <h3>Aucun résultat trouvé</h3>
+        <p>Essayez d'utiliser d'autres termes de recherche</p>
+    </div>
+</section>
+        <!-- Page de détails produit -->
+        <section id="product-page" class="page">
+            <div class="page-header">
+                <button class="back-btn"><i class="fas fa-arrow-left"></i></button>
+                <h2>Détails du produit</h2>
+            </div>
+            <div class="product-detail">
+                <div class="product-image-carousel">
+                    <div class="carousel-inner">
+                        <!-- Images du produit ajoutées dynamiquement -->
+                    </div>
+                    <div class="carousel-dots">
+                        <!-- Points de navigation ajoutés dynamiquement -->
+                    </div>
+                </div>
+                <div class="product-info">
+                    <h1 id="product-name">Nom du produit</h1>
+                    <p class="product-brand" id="product-brand">Marque</p>
+                    <div class="product-pricing">
+                        <span class="current-price" id="product-price">0 FCFA</span>
+                        <span class="original-price" id="product-original-price">0 FCFA</span>
+                        <span class="discount" id="product-discount">0%</span>
+                    </div>
+                    <p class="delivery-info" id="product-delivery">Livraison gratuite</p>
+                    <div class="product-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                    </div>
+                    <div class="product-actions">
+                        <div class="quantity-selector">
+                            <button class="quantity-btn minus">-</button>
+                            <span class="quantity">1</span>
+                            <button class="quantity-btn plus">+</button>
+                        </div>
+                        <button class="add-to-cart-btn">Ajouter au panier</button>
+                        <button class="favorite-btn"><i class="far fa-heart"></i></button>
+                    </div>
+                    <div class="product-specs">
+                        <h3>Caractéristiques</h3>
+                        <div class="specs-list" id="product-specs">
+                            <!-- Caractéristiques ajoutées dynamiquement -->
+                        </div>
+                    </div>
+                    <div class="product-details">
+                        <h3>Détails</h3>
+                        <p id="product-description">Description du produit</p>
+                    </div>
+                </div>
+            </div>
+            <div class="related-products">
+                <h3>Vous pourriez aussi aimer</h3>
+                <div class="products-grid" id="related-products">
+                    <!-- Produits similaires ajoutés dynamiquement -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Page Panier -->
+        <section id="cart-page" class="page">
+            <div class="page-header">
+                <button class="back-btn"><i class="fas fa-arrow-left"></i></button>
+                <h2>Votre panier</h2>
+            </div>
+            <div class="cart-content">
+                <div class="delivery-notice">
+                    <i class="fas fa-truck"></i> LIVRAISON EN 24H.
+                </div>
+                <div id="empty-cart" class="empty-cart">
+                    <i class="fas fa-shopping-cart"></i>
+                    <p>Votre panier est vide</p>
+                </div>
+                <div id="cart-items" class="hidden">
+                    <!-- Articles du panier ajoutés dynamiquement -->
+                </div>
+                <div class="delivery-options">
+                    <h3>Options de livraison</h3>
+                    <select id="delivery-zone">
+                        <option value="pickup">Récupérer par moi-même</option>
+                        <!-- Options de livraison ajoutées dynamiquement -->
+                    </select>
+                </div>
+                <div class="cart-summary">
+                    <div class="summary-line">
+                        <span>Sous-total:</span>
+                        <span id="subtotal">0 FCFA</span>
+                    </div>
+                    <div class="summary-line original">
+                        <span>Prix normal:</span>
+                        <span id="original-total">0 FCFA</span>
+                    </div>
+                    <div class="summary-line savings">
+                        <span>Économies:</span>
+                        <span id="savings">0 FCFA (0%)</span>
+                    </div>
+                    <div class="summary-line total">
+                        <span>Total:</span>
+                        <span id="total-price">0 FCFA</span>
+                    </div>
+                    <button id="checkout-btn" class="checkout-btn">Valider ma commande</button>
+                </div>
+                
+            </div>
+        </section>
+
+        <!-- Page Favoris -->
+        <section id="favorites-page" class="page">
+            <div class="page-header">
+                <button class="back-btn"><i class="fas fa-arrow-left"></i></button>
+                <h2>Mes favoris</h2>
+            </div>
+            <div class="favorites-content">
+                <div id="empty-favorites" class="empty-state">
+                    <i class="far fa-heart"></i>
+                    <p>Aucun produit en favoris</p>
+                </div>
+                <div class="products-grid" id="favorites-list">
+                    <!-- Produits favoris ajoutés dynamiquement -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Page Contact -->
+        <section id="contact-page" class="page">
+            <div class="page-header">
+                <button class="back-btn"><i class="fas fa-arrow-left"></i></button>
+                <h2>Contact</h2>
+            </div>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <h3><i class="fas fa-phone"></i> Téléphone</h3>
+                    <p><a href="tel:+221772353333">+221 77 235 33 33</a></p>
+                    <p><a href="tel:+221788353333">+221 78 835 33 33</a></p>
+                   <p><a href="tel:+221772952129">+221 77 295 21 29</a></p>
+                    <p><a href="tel:+221777531313">+221 77 753 13 13</a></p>
+                    
+                    <h3><i class="fab fa-whatsapp"></i> WhatsApp</h3>
+                    <p><a href="https://wa.me/221772952129" target="_blank">+221 77 295 21 29</a></p>
+                                      <p><a href="https://wa.me/221777531313" target="_blank">+221 77 753 13 13</a></p>
+                    <p><a href="https://wa.me/221772353333" target="_blank">+221 77 235 33 33</a></p>
+                    <p><a href="https://wa.me/221788353333" target="_blank">+221 78 835 33 33</a></p>
+                  
+
+                    
+                    <h3><i class="fas fa-map-marker-alt"></i> Adresses</h3>
+                    <div class="address">
+                        <h4>Dakar HLM</h4>
+                        <p>102 Rue HLM 173</p>
+                       
+                    </div>
+                     
+                    
+                    <h3><i class="fas fa-clock"></i> Horaires d'ouverture</h3>
+                    <p>Lundi - Samedi: 8h - 20h</p>
+                    <p>Dimanche: 9h - 13h</p>
+                </div>
+            </div>
+        </section>
+<!-- Page Personnelle -->
+<!-- Page Personnelle - Remplacez votre section existante par ce code -->
+<section id="personal-page" class="page">
+    <div class="page-header">
+        <button class="back-btn"><i class="fas fa-arrow-left"></i></button>
+        <h2>Mon Espace Personnel</h2>
+    </div>
+    
+    <div class="personal-content">
+        <!-- Section Profil -->
+        <div class="profile-card">
+            <div class="profile-header">
+                <div class="profile-image-container">
+                    <img id="profile-image" src="https://via.placeholder.com/120" alt="Photo de profil">
+                    <label for="profile-upload" class="change-photo-btn">
+                        <i class="fas fa-camera"></i>
+                    </label>
+                    <input type="file" id="profile-upload" accept="image/*" class="hidden">
+                </div>
+                
+            </div>
+            
+            <div class="profile-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="profile-name">Nom & Prénom</label>
+                        <input type="text" id="profile-name" placeholder="Votre nom complet">
+                    </div>
+                    <div class="form-group">
+                        <label for="profile-phone">Téléphone</label>
+                        <input type="tel" id="profile-phone" placeholder="77 123 45 67">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="profile-email">Email</label>
+                    <input type="email" id="profile-email" placeholder="votre@email.com">
+                </div>
+                
+                <div class="form-group">
+                    <label for="profile-address">Adresse</label>
+                    <textarea id="profile-address" rows="2" placeholder="Votre adresse complète"></textarea>
+                </div>
+                
+                <button id="save-profile-btn" class="modern-btn">
+                    <i class="fas fa-save"></i> Enregistrer
+                </button>
+            </div>
+        </div>
+        
+        <!-- Section Recherche de Facture -->
+      <div class="facture-search-section">
+    <h3><i class="fas fa-receipt"></i> OBTENIR MA FACTURE MAINTENANT</h3>
+    <div class="search-facture-form">
+        <input type="text" id="personal-facture-input" placeholder="Entrez votre numéro de commande (ex: ST685010 ou ST-685010)">
+        <button id="personal-facture-btn"><i class="fas fa-search"></i> Rechercher</button>
+    </div>
+    <div id="personal-facture-result" class="hidden">
+        <!-- Les résultats de recherche s'afficheront ici -->
+    </div>
+</div>
+        
+        <!-- Section Historique des Commandes -->
+        <div class="history-card">
+            <div class="card-header">
+                <h3><i class="fas fa-history"></i> Historique des commandes</h3>
+                <span id="orders-count">0 commande(s)</span>
+            </div>
+            
+            <div id="personal-order-history" class="orders-list">
+                <!-- Commandes ajoutées dynamiquement -->
+                <div class="empty-state">
+                    <i class="fas fa-shopping-bag"></i>
+                    <p>Aucune commande effectuée</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+        <!-- Page Admin -->
+        <section id="admin-page" class="page">
+            <div class="page-header">
+                <button class="back-btn"><i class="fas fa-arrow-left"></i></button>
+                <h2>Administration</h2>
+            </div>
+            <div class="admin-dashboard">
+                <div class="admin-menu">
+                    <button class="admin-btn" data-view="add-product">
+                        <i class="fas fa-plus-circle"></i>
+                        <span>Ajouter un Article</span>
+                    </button>
+                    <button class="admin-btn" data-view="product-list">
+                        <i class="fas fa-list"></i>
+                        <span>Liste des Articles</span>
+                    </button>
+                    <button class="admin-btn" data-view="pending-orders">
+                        <i class="fas fa-clock"></i>
+                        <span>Commandes en Attente</span>
+                    </button>
+                    <button class="admin-btn" data-view="completed-orders">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Commandes Validées</span>
+                    </button>
+                    <button class="admin-btn" data-view="rejected-orders">
+                        <i class="fas fa-times-circle"></i>
+                        <span>Commandes Rejetées</span>
+                    </button>
+                    <button class="admin-btn" data-view="delivery-settings">
+                        <i class="fas fa-truck"></i>
+                        <span>Livraison</span>
+                    </button>
+                    <button class="admin-btn" data-view="ads-settings">
+                        <i class="fas fa-ad"></i>
+                        <span>Publicités</span>
+                    </button>
+                </div>
+
+                <!-- Vue Ajouter un produit -->
+                <div id="add-product-view" class="admin-view hidden">
+                    <h3>Ajouter un nouveau produit</h3>
+                    <form id="add-product-form">
+                        <div class="form-group">
+                            <label for="product-name">Nom du produit</label>
+                            <input type="text" id="product-name-input" name="name">
+                        </div>
+                        <div class="form-group">
+                            <label for="product-brand">Marque</label>
+                            <input type="text" id="product-brand-input" name="brand">
+                        </div>
+                        <div class="form-group">
+                            <label for="product-category">Catégorie</label>
+                            <select id="product-category-input" name="category">
+                                <option value="iPhone">iPhone</option>
+                                <option value="Samsung">Samsung</option>
+                                <option value="Tecno">Tecno</option>
+                                <option value="Autres marques">Autres marques</option>
+                                <option value="Ecouteur">Écouteur</option>
+                                <option value="AirPods">AirPods</option>
+                                <option value="Chargeur">Chargeur</option>
+                                <option value="Power Bank">Power Bank</option>
+                                <option value="Tablette">Tablette</option>
+                                <option value="ordinateur">Ordinateur</option>
+                                <option value="Box">Box</option>
+                                <option value="Smart Watch">Smart Watch</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="product-normal-price">Prix normal (FCFA)</label>
+                            <input type="number" id="product-normal-price-input" name="normalPrice" min="0">
+                        </div>
+                        <div class="form-group">
+                            <label for="product-sale-price">Prix réduit (FCFA)</label>
+                            <input type="number" id="product-sale-price-input" name="salePrice" min="0">
+                        </div>
+                        <div class="form-group">
+                            <label for="product-discount">Pourcentage de réduction (%)</label>
+                            <input type="number" id="product-discount-input" name="discount" min="0" max="100">
+                        </div>
+                        <div class="form-group">
+                            <label for="product-stock">Stock initial</label>
+                            <input type="number" id="product-stock-input" name="stock" min="0">
+                        </div>
+                        <div class="form-group">
+                            <label for="product-delivery">Livraison</label>
+                            <select id="product-delivery-input" name="delivery">
+                                <option value="free">Gratuite</option>
+                                <option value="paid">Payante</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Flash Sale</label>
+                            <div class="checkbox-group">
+                                <input type="checkbox" id="product-flash-sale-input" name="flashSale">
+                                <label for="product-flash-sale-input">Inclure dans les ventes flash</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Caractéristiques</label>
+                            <div class="specs-inputs">
+                                <input type="text" placeholder="OS" name="spec-os">
+                                <input type="text" placeholder="Stockage" name="spec-storage">
+                                <input type="text" placeholder="RAM" name="spec-ram">
+                                <input type="text" placeholder="Taille écran" name="spec-screen">
+                                <input type="text" placeholder="Modèle" name="spec-model">
+                                <input type="text" placeholder="Technologie" name="spec-tech">
+                                <input type="text" placeholder="Couleurs" name="spec-colors">
+                                <input type="text" placeholder="Batterie" name="spec-battery">
+                                <input type="text" placeholder="Caméra" name="spec-camera">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="product-description-input">Description du produit</label>
+                            <textarea id="product-description-input" name="description" rows="4"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="product-main-image">Image principale (URL)</label>
+                            <input type="url" id="product-main-image-input" name="mainImage" placeholder="https://...">
+                            <div class="image-preview" id="main-image-preview"></div>
+                        </div>
+                        <div class="form-group">
+                            <label>Images supplémentaires (URLs)</label>
+                            <div id="additional-images-container">
+                                <div class="image-input-group">
+                                    <input type="url" class="additional-image-input" name="additionalImages" placeholder="https://...">
+                                    <div class="image-preview additional-preview"></div>
+                                </div>
+                            </div>
+                            <button type="button" id="add-image-btn" class="secondary-btn">+ Ajouter une image</button>
+                        </div>
+                        <button type="submit" class="submit-btn">Ajouter le produit</button>
+                    </form>
+                </div>
+<!-- Vue Liste des produits -->
+<div id="product-list-view" class="admin-view hidden">
+    <!-- Le contenu sera généré dynamiquement -->
+</div>
+
+<!-- Vue Commandes en attente -->
+<div id="pending-orders-view" class="admin-view hidden">
+    <!-- Le contenu sera généré dynamiquement -->
+</div>
+
+<!-- Vue Commandes validées -->
+<div id="completed-orders-view" class="admin-view hidden">
+    <!-- Le contenu sera généré dynamiquement -->
+</div>
+
+<!-- Vue Commandes rejetées -->
+<div id="rejected-orders-view" class="admin-view hidden">
+    <!-- Le contenu sera généré dynamiquement -->
+</div>
+
+<!-- Vue Paramètres de livraison -->
+<div id="delivery-settings-view" class="admin-view hidden">
+    <!-- Le contenu sera généré dynamiquement -->
+</div>
+
+<!-- Vue Paramètres des publicités -->
+<div id="ads-settings-view" class="admin-view hidden">
+    <!-- Le contenu sera généré dynamiquement -->
+</div>
+                <!-- Autres vues admin seront ajoutées dynamiquement -->
+            </div>
+        </section>
+
+        <!-- Formulaire de commande -->
+        <div id="checkout-modal" class="modal hidden">
+            <div class="modal-content">
+                <button class="close-modal">&times;</button>
+                <h2>Finaliser votre commande</h2>
+               <form id="checkout-form">
+    <input type="text" id="customer-name" placeholder="Nom complet" required>
+    <input type="tel" id="customer-phone" placeholder="Numéro de téléphone" required>
+    <input type="email" id="customer-email" placeholder="Email (optionnel)">
+    <textarea id="customer-address" placeholder="Adresse de livraison" required></textarea>
+                    <button type="submit" class="submit-btn">Confirmer la commande</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Facture -->
+     <!-- Ajoutez ceci dans votre HTML, de préférence à la fin du body -->
+<div id="facture-modal" class="facture-modal hidden">
+    <div class="facture-content">
+        <button class="close-facture">&times;</button>
+        
+        <!-- En-tête élégante -->
+        <div class="facture-header">
+            <div class="facture-logo-container">
+                <img src="https://i.supaimg.com/b4a44dc2-c78a-45ff-a93b-dd14e4249939.jpg" alt="SOUHAIBOU TÉLÉCOM" class="facture-logo">
+                <div class="facture-brand">
+                    <h1>SOUHAIBOU TÉLÉCOM</h1>
+                    <p class="facture-subtitle">Excellence en Électronique & Accessoires</p>
+                </div>
+            </div>
+            <div class="facture-badge">
+                <span>Commande confirmée</span>
+            </div>
+        </div>
+
+        <!-- Informations cliet -->
+        <div class="facture-client-info">
+            <div class="info-section">
+                <h3>Informations Client</h3>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <span class="info-label">Commande N°:</span>
+                        <span class="info-value" id="facture-number">ST000001</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Date:</span>
+                        <span class="info-value" id="facture-date">01/01/2024 14:30</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Client:</span>
+                        <span class="info-value" id="facture-client">John Doe</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Téléphone:</span>
+                        <span class="info-value" id="facture-phone">+221 77 123 45 67</span>
+                    </div>
+                    <div class="info-item full-width">
+                        <span class="info-label">Email:</span>
+                        <span class="info-value" id="facture-email">client@email.com</span>
+                    </div>
+                    <div class="info-item full-width">
+                        <span class="info-label">Adresse:</span>
+                        <span class="info-value" id="facture-address">123 Avenue Lamine Guèye, Dakar</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Articles -->
+        <div class="facture-items-section">
+            <h3>Articles Commandés</h3>
+            <div class="facture-items" id="facture-items">
+                <!-- Les articles seront ajoutés dynamiquement -->
+            </div>
+        </div>
+
+        <!-- Résumé et Total -->
+        <div class="facture-summary">
+            <div class="summary-grid">
+               
+               
+                <div class="summary-item total">
+                    <span>TOTAL:</span>
+                    <span id="facture-total">0 FCFA</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Informations de paiement -->
+        <div class="payment-info">
+            <h3>Informations de Paiement</h3>
+            <div class="payment-methods">
+                <div class="payment-method">
+                    <i class="fas fa-money-bill-wave"></i>
+                    <span>Paiement à la livraison (prix de la livraison exclu !) </span>
+                </div>
+                
+            </div>
+        </div>
+
+        <!-- Pied de page -->
+        <div class="facture-footer">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Merci pour votre confiance !</h4>
+                    <p>Votre satisfaction est notre priorité</p>
+                </div>
+                <div class="footer-section">
+                    <p><strong>Service Client:</strong> +221 77 123 45 67</p>
+                    <p><strong>Email:</strong> contact@souhaiboutelecom.com</p>
+                </div>
+            </div>
+            <div class="footer-actions">
+                <button class="download-facture-btn" id="download-facture">
+                    <i class="fas fa-download"></i>
+                    Commande effectuée
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+        <!-- Modal d'image plein écran -->
+        <div id="image-modal" class="modal hidden">
+            <div class="modal-content image-viewer">
+                <button class="close-modal">&times;</button>
+                <img id="fullscreen-image" src="" alt="Image plein écran">
+            </div>
+        </div>
+
+        <!-- Modal publicitaire -->
+        <div id="ad-modal" class="modal hidden">
+            <div class="modal-content ad">
+                <button class="close-modal">&times;</button>
+                <img id="ad-image" src="" alt="Publicité">
+            </div>
+        </div>
+    </main>
+
+    <!-- Navigation inférieure -->
+    <nav id="bottom-nav">
+        <a href="#" class="nav-item active" data-page="home-page">
+            <i class="fas fa-home"></i>
+            <span>Accueil</span>
+        </a>
+        
+       
+        <a href="#" class="nav-item" data-page="favorites-page">
+            <i class="fas fa-heart"></i>
+            <span>Favoris</span>
+        </a>
+        <a href="#" class="nav-item" data-page="cart-page">
+            <i class="fas fa-shopping-cart"></i>
+            <span>Panier</span>
+            <span id="cart-count" class="badge hidden">0</span>
+        </a>
+        <a href="#" class="nav-item" data-page="contact-page">
+            <i class="fas fa-phone"></i>
+            <span>Contact</span>
+        </a>
+      <!-- Ajoutez ceci dans la navigation inférieure -->
+<a href="#" class="nav-item" data-page="personal-page">
+    <i class="fas fa-user"></i>
+    <span>Mon Compte</span>
+</a>
+    </nav>
+
+    <!-- Notifications -->
+    <div id="notification" class="notification hidden">
+        <span id="notification-text"></span>
+    </div>
+
+    <script src="script.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</body>
+</html>
